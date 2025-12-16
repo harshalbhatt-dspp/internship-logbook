@@ -1,0 +1,88 @@
+<!-- ===============================
+ PURE HTML + GOOGLE SHEETS INTERNSHIP LOGBOOK
+ Author: Faculty Internship Logbook
+ Usage: Works without server or database
+ =============================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internship Logbook (120 Hours)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; }
+    .container { max-width:800px; margin:30px auto; background:#fff; padding:20px; border-radius:6px; }
+    h1 { text-align:center; }
+    label { font-weight:bold; }
+    input, textarea, button { width:100%; padding:8px; margin:6px 0 15px; }
+    button { background:#2c7be5; color:#fff; border:none; cursor:pointer; }
+    button:hover { background:#1a5bb8; }
+    .msg { text-align:center; font-weight:bold; }
+    .note { font-size:0.9em; color:#555; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Internship Daily Work Log</h1>
+  <p class="note">Total Internship Requirement: <strong>120 Hours</strong></p>
+
+  <form id="logForm">
+    <label>Student Name *</label>
+    <input type="text" name="student" required>
+
+    <label>Date *</label>
+    <input type="date" name="date" required>
+
+    <label>In Time *</label>
+    <input type="time" name="in_time" required>
+
+    <label>Out Time *</label>
+    <input type="time" name="out_time" required>
+
+    <label>Work Description</label>
+    <textarea name="work" rows="4"></textarea>
+
+    <label>Upload Image (jpg / jpeg / png)</label>
+    <input type="file" name="image" accept="image/*">
+
+    <button type="submit">Submit Entry</button>
+  </form>
+
+  <p class="msg" id="response"></p>
+
+  <hr>
+  <p class="note">
+    • Data is stored directly in Google Sheets<br>
+    • Images are saved in Google Drive<br>
+    • No server or database required
+  </p>
+</div>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwz2lTsonJxPQ-1vww8XZzFnryQyyMCQskg7fCvHnnYw0KOwvLKdGqIXM7EP0wxtHI3gg/exec';
+const form = document.getElementById('logForm');
+const responseMsg = document.getElementById('response');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const formData = new FormData(form);
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.text())
+  .then(text => {
+    responseMsg.innerText = 'Entry submitted successfully.';
+    responseMsg.style.color = 'green';
+    form.reset();
+  })
+  .catch(error => {
+    responseMsg.innerText = 'Submission failed. Try again.';
+    responseMsg.style.color = 'red';
+  });
+});
+</script>
+</body>
+</html>
+
