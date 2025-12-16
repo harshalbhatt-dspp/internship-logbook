@@ -68,9 +68,34 @@ form.addEventListener('submit', e => {
   const formData = new FormData(form);
 
   fetch(scriptURL, {
-    method: 'POST',
-    body: formData
-  })
+  method: 'POST',
+  body: formData,
+  mode: 'no-cors'
+})
+.then(() => {
+  document.getElementById('response').innerText =
+    'Entry submitted successfully.';
+  document.getElementById('response').style.color = 'green';
+  document.getElementById('logForm').reset();
+})
+.catch(() => {
+  document.getElementById('response').innerText =
+    'Submission failed. Try again.';
+  document.getElementById('response').style.color = 'red';
+});
+
+.then(() => {
+  document.getElementById('response').innerText =
+    'Entry submitted successfully.';
+  document.getElementById('response').style.color = 'green';
+  document.getElementById('logForm').reset();
+})
+.catch(() => {
+  document.getElementById('response').innerText =
+    'Submission failed. Try again.';
+  document.getElementById('response').style.color = 'red';
+});
+
   .then(res => res.text())
   .then(text => {
     responseMsg.innerText = 'Entry submitted successfully.';
